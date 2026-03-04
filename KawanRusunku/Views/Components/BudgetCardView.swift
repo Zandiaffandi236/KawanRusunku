@@ -42,7 +42,7 @@ struct BudgetCardView: View {
                 Spacer()
 
                 Button(action: { showBudgetEditor = true }) {
-                    Text("$\(String(format: "%.2f", monthlyBudget))")
+                    Text("\(monthlyBudget, format: .currency(code: "IDR").precision(.fractionLength(0)))")
                         .font(.headline)
                         .foregroundColor(.black)
                 }
@@ -63,13 +63,13 @@ struct BudgetCardView: View {
             .frame(height: 8)
 
             HStack {
-                Text("Spent $\(String(format: "%.2f", totalSpent)) of $\(String(format: "%.2f", monthlyBudget))")
+                Text("Spent \(totalSpent, format: .currency(code: "IDR").precision(.fractionLength(0))) of \(monthlyBudget, format: .currency(code: "IDR").precision(.fractionLength(0)))")
                     .font(.caption)
                     .foregroundColor(.gray)
 
                 Spacer()
 
-                Text("Remaining: $\(String(format: "%.2f", remainingAmount))")
+                Text("Remaining: \(remainingAmount, format: .currency(code: "IDR").precision(.fractionLength(0)))")
                     .font(.caption)
                     .foregroundColor(.gray)
             }

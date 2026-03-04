@@ -7,6 +7,10 @@ struct HomeView: View {
     
     @State private var selectedCategory = "All"
     @State private var navigationPath = NavigationPath()
+    
+    private var overallSpent: Double {
+        expenses.reduce(0) { $0 + $1.amount }
+    }
 
     private var totalSpent: Double {
         filteredExpenses.reduce(0) { $0 + $1.amount }
@@ -35,7 +39,7 @@ struct HomeView: View {
                     .ignoresSafeArea()
 
                 VStack(spacing: 16) {
-                    BudgetCardView(totalSpent: totalSpent)
+                    BudgetCardView(totalSpent: overallSpent)
                         .padding(.horizontal, 16)
 
                     CategoryFilterView(selectedCategory: $selectedCategory)
@@ -67,7 +71,7 @@ struct HomeView: View {
     private var expenseListView: some View {
         List {
             ForEach(groupedExpenses, id: \.0) { dateKey, dayExpenses in
-                Section(header: Text(dateKey).font(.headline)) {
+                Section(header: sectionHeader(dateKey: dateKey, dayExpenses: dayExpenses)) {
                     ForEach(dayExpenses) { expense in
                         NavigationLink(value: expense) {
                             ExpenseRowView(expense: expense)
@@ -132,4 +136,35 @@ struct HomeView: View {
         if key == "Yesterday" { return Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date() }
         return formatter.date(from: key) ?? Date()
     }
+    
+    private func sectionHeader(dateKey: String, dayExpenses: [Expense]) -> some View {
+        HStack {
+            Text(dateKey).font(.subheadline).bold()
+            
+            Spacer()
+            
+            let dayTotal = dayExpenses.reduce(0) { $0 + $1.amount }
+            
+            Text("Rp \(dayTotal, format: .number.grouping(.automatic))")
+                .font(.footnote)
+                .fontWeight(.semibold)
+                .foregroundColor(.secondary)
+        }
+        .textCase(nil)
+    }
+}
+
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Expense.self, configurations: config)
+    
+    // Tambahkan data dummy agar tidak kosong
+    let sampleData = [
+        Expense(name: "Kopi V60", amount: 45000, category: "Food & Drink"),
+        Expense(name: "Makan Siang", amount: 35000, category: "Food & Drink")
+    ]
+    sampleData.forEach { container.mainContext.insert($0) }
+    
+    return HomeView()
+        .modelContainer(container)
 }

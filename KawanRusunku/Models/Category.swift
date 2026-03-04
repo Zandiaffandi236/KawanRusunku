@@ -19,13 +19,14 @@ struct CategoryInfo {
     static let internet = CategoryInfo(name: "Internet", icon: "wifi", color: .blue)
     static let vehicle = CategoryInfo(name: "Vehicle", icon: "car.fill", color: .blue)
     static let gerai = CategoryInfo(name: "Gerai", icon: "storefront.fill", color: .pink)
+    static let others = CategoryInfo(name: "Others", icon: "storefront.fill", color: .gray)
 
     static var allCategories: [CategoryInfo] {
-        [.foodDrink, .laundry, .electricity, .rent, .internet, .vehicle, .gerai]
+        [.foodDrink, .laundry, .electricity, .rent, .internet, .vehicle, .gerai, .others]
     }
 
     static var filterCategories: [CategoryInfo] {
-        [.all, .foodDrink, .laundry, .electricity, .rent, .internet, .vehicle, .gerai]
+        [.all, .foodDrink, .laundry, .electricity, .rent, .internet, .vehicle, .gerai, .others]
     }
 
     static func info(for categoryName: String) -> CategoryInfo {
@@ -37,6 +38,7 @@ struct CategoryInfo {
         case "Internet": return .internet
         case "Vehicle": return .vehicle
         case "Gerai": return .gerai
+        case "Others": return .others
         default: return .foodDrink
         }
     }

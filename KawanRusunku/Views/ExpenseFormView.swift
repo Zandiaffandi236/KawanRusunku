@@ -53,9 +53,9 @@ struct ExpenseFormView: View {
                 .cornerRadius(8)
             
             HStack(spacing: 8) {
-                Text("$").font(.headline).padding(.leading, 12)
+                Text("Rp").font(.headline).padding(.leading, 12)
                 TextField("0.00", text: $amount)
-                    .keyboardType(.decimalPad)
+                    .keyboardType(.numberPad)
                     .padding(.vertical, 12)
             }
             .background(Color.white)
@@ -67,13 +67,15 @@ struct ExpenseFormView: View {
     private var categorySelection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Category").font(.headline).padding(.horizontal, 16)
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                ForEach(CategoryInfo.allCategories, id: \.name) { category in
-                    CategoryPillView(
-                        category: category,
-                        isSelected: selectedCategory == category.name,
-                        action: { selectedCategory = category.name }
-                    )
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(CategoryInfo.allCategories, id: \.name) { category in
+                        CategoryPillView(
+                            category: category,
+                            isSelected: selectedCategory == category.name,
+                            action: { selectedCategory = category.name }
+                        )
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -152,4 +154,14 @@ struct ExpenseFormView: View {
             Text("Are you sure you want to delete this expense?")
         }
     }
+}
+
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Expense.self, configurations: config)
+    
+    NavigationStack {
+        ExpenseFormView(navigationPath: .constant(NavigationPath()), expense: nil)
+    }
+    .modelContainer(container)
 }
