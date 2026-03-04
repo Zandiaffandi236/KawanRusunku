@@ -9,6 +9,7 @@ import SwiftUI
 struct CategoryPillView: View {
     let category: CategoryInfo
     let isSelected: Bool
+    var selectedColor: Color = .lime
     let action: () -> Void
 
     var body: some View {
@@ -20,8 +21,8 @@ struct CategoryPillView: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(isSelected ? Color.green : Color.gray.opacity(0.2))
-            .foregroundColor(isSelected ? .white : .black)
+            .background(isSelected ? selectedColor : Color.gray.opacity(0.2))
+            .foregroundColor(isSelected ? .black : .primary)
             .cornerRadius(20)
         }
     }

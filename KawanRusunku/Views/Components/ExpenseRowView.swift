@@ -21,7 +21,7 @@ struct ExpenseRowView: View {
                 .overlay(
                     Image(systemName: categoryInfo.icon)
                         .font(.system(size: 20))
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                 )
 
             VStack(alignment: .leading, spacing: 4) {
@@ -42,7 +42,7 @@ struct ExpenseRowView: View {
                 .foregroundColor(.red)
         }
         .padding(12)
-        .background(Color.white)
+        .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(8)
     }
 }

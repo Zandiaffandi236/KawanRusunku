@@ -16,7 +16,7 @@ struct ExpenseFormView: View {
     private var isEditMode: Bool { expense != nil }
 
     private var isSaveDisabled: Bool {
-        name.trimmingCharacters(in: .whitespaces).isEmpty || rawAmmount() <= 0
+        name.trimmingCharacters(in: .whitespaces).isEmpty || rawAmount() <= 0
     }
 
     var body: some View {
@@ -49,7 +49,7 @@ struct ExpenseFormView: View {
         VStack(spacing: 12) {
             TextField("Expense name", text: $name)
                 .padding(12)
-                .background(Color.white)
+                .background(Color(.secondarySystemGroupedBackground))
                 .cornerRadius(8)
             
             HStack(spacing: 8) {
@@ -64,7 +64,7 @@ struct ExpenseFormView: View {
                         }
                     }
             }
-            .background(Color.white)
+            .background(Color(.secondarySystemGroupedBackground))
             .cornerRadius(8)
         }
         .padding(.horizontal, 16)
@@ -106,10 +106,10 @@ struct ExpenseFormView: View {
         Button {
             if let expense = expense {
                 expense.name = name
-                expense.amount = rawAmmount()
+                expense.amount = rawAmount()
                 expense.category = selectedCategory
             } else {
-                let newExpense = Expense(name: name, amount: rawAmmount(), category: selectedCategory)
+                let newExpense = Expense(name: name, amount: rawAmount(), category: selectedCategory)
                 modelContext.insert(newExpense)
             }
             navigationPath = NavigationPath() // Kembali ke Home
@@ -117,7 +117,7 @@ struct ExpenseFormView: View {
             Text("Save")
                 .frame(maxWidth: .infinity)
                 .padding(12)
-                .background(isSaveDisabled ? Color.gray.opacity(0.2) : Color.blue)
+                .background(isSaveDisabled ? Color.gray.opacity(0.2) : Color.lime)
                 .foregroundColor(isSaveDisabled ? .gray : .white)
                 .cornerRadius(8)
         }
@@ -132,7 +132,7 @@ struct ExpenseFormView: View {
                 .frame(maxWidth: .infinity)
                 .padding(12)
                 .background(Color.gray.opacity(0.2))
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .cornerRadius(8)
         }
     }
@@ -145,7 +145,7 @@ struct ExpenseFormView: View {
                 .frame(maxWidth: .infinity)
                 .padding(12)
                 .foregroundColor(.red)
-                .background(Color.white)
+                .background(Color(.secondarySystemGroupedBackground))
                 .cornerRadius(8)
         }
         .alert("Delete Expense", isPresented: $showDeleteConfirmation) {
@@ -171,7 +171,7 @@ struct ExpenseFormView: View {
         return formatter.string(from: NSNumber(value: number)) ?? digits
     }
     
-    private func rawAmmount() -> Double {
+    private func rawAmount() -> Double {
         let digits = amount.filter { $0.isNumber }
         return Double(digits) ?? 0
     }

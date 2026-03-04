@@ -20,7 +20,7 @@ struct BudgetCardView: View {
         guard monthlyBudget > 0 else { return .gray }
         let percentage = progressPercentage * 100
         if percentage < 75 {
-            return .green
+            return .lime
         } else if percentage < 90 {
             return .yellow
         } else {
@@ -44,7 +44,7 @@ struct BudgetCardView: View {
                 Button(action: { showBudgetEditor = true }) {
                     Text("\(monthlyBudget, format: .currency(code: "IDR").precision(.fractionLength(0)))")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             }
 
@@ -75,16 +75,14 @@ struct BudgetCardView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(12)
         .shadow(radius: 4, x: 0, y: 2)
         .shadow(color: Color.black.opacity(0.1), radius: 4)
-        .alert("Edit Budget", isPresented: $showBudgetEditor) {
-            TextField("Budget amount", value: $monthlyBudget, format: .number)
-                .keyboardType(.decimalPad)
-
-            Button("Cancel", role: .cancel) { }
-            Button("Save") { }
+        .sheet(isPresented: $showBudgetEditor) {
+            SetBudgetSheetView()
+                .presentationDetents([.fraction(0.6)])
+                .presentationCornerRadius(40)
         }
     }
 }

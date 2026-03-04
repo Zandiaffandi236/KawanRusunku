@@ -15,12 +15,12 @@ final class Expense {
     var category: String
     var createdAt: Date
 
-    init(name: String, amount: Double, category: String) {
+    init(name: String, amount: Double, category: String, createdAt: Date = Date()) {
         self.id = UUID()
         self.name = name
         self.amount = amount
         self.category = category
-        self.createdAt = Date()
+        self.createdAt = createdAt
     }
 }
 
