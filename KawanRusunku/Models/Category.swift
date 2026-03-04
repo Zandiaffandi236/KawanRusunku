@@ -11,15 +11,15 @@ struct CategoryInfo {
     let icon: String
     let color: Color
 
-    static let all = CategoryInfo(name: "All", icon: "line.3.horizontal.decrease.circle", color: .gray)
-    static let foodDrink = CategoryInfo(name: "Food & Drink", icon: "fork.knife", color: .orange)
-    static let laundry = CategoryInfo(name: "Laundry", icon: "washer.fill", color: .blue)
-    static let electricity = CategoryInfo(name: "Electricity", icon: "bolt.fill", color: .yellow)
-    static let rent = CategoryInfo(name: "Rent", icon: "building.2.fill", color: .gray)
-    static let internet = CategoryInfo(name: "Internet", icon: "wifi", color: .blue)
-    static let vehicle = CategoryInfo(name: "Vehicle", icon: "car.fill", color: .blue)
-    static let gerai = CategoryInfo(name: "Gerai", icon: "storefront.fill", color: .pink)
-    static let others = CategoryInfo(name: "Others", icon: "storefront.fill", color: .gray)
+    static let all = CategoryInfo(name: "All", icon: "line.3.horizontal.decrease.circle", color: .green)
+    static let foodDrink = CategoryInfo(name: "Food & Drink", icon: "fork.knife", color: .green)
+    static let laundry = CategoryInfo(name: "Laundry", icon: "washer.fill", color: .green)
+    static let electricity = CategoryInfo(name: "Electricity", icon: "bolt.fill", color: .green)
+    static let rent = CategoryInfo(name: "Rent", icon: "building.2.fill", color: .green)
+    static let internet = CategoryInfo(name: "Internet", icon: "wifi", color: .green)
+    static let vehicle = CategoryInfo(name: "Vehicle", icon: "car.fill", color: .green)
+    static let gerai = CategoryInfo(name: "Gerai", icon: "storefront.fill", color: .green)
+    static let others = CategoryInfo(name: "Others", icon: "storefront.fill", color: .green)
 
     static var allCategories: [CategoryInfo] {
         [.foodDrink, .laundry, .electricity, .rent, .internet, .vehicle, .gerai, .others]

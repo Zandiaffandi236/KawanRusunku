@@ -56,7 +56,7 @@ struct BudgetCardView: View {
                     if monthlyBudget > 0 {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(progressColor)
-                            .frame(width: geometry.size.width * progressPercentage)
+                            .frame(width: geometry.size.width * (1.0 - progressPercentage ))
                     }
                 }
             }
@@ -90,7 +90,7 @@ struct BudgetCardView: View {
 }
 
 #Preview {
-    BudgetCardView(totalSpent: 500)
+    BudgetCardView(totalSpent: 300000)
         .padding()
         .background(Color(.systemGroupedBackground))
 }

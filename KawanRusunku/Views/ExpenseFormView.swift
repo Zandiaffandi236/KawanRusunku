@@ -16,7 +16,7 @@ struct ExpenseFormView: View {
     private var isEditMode: Bool { expense != nil }
 
     private var isSaveDisabled: Bool {
-        name.trimmingCharacters(in: .whitespaces).isEmpty || (Double(amount) ?? 0) <= 0
+        name.trimmingCharacters(in: .whitespaces).isEmpty || rawAmmount() <= 0
     }
 
     var body: some View {
@@ -38,7 +38,7 @@ struct ExpenseFormView: View {
         .onAppear {
             if let expense = expense {
                 name = expense.name
-                amount = String(format: "%.2f", expense.amount)
+                amount = formatNumber(String(Int(expense.amount)))
                 selectedCategory = expense.category
             }
         }
@@ -54,9 +54,15 @@ struct ExpenseFormView: View {
             
             HStack(spacing: 8) {
                 Text("Rp").font(.headline).padding(.leading, 12)
-                TextField("0.00", text: $amount)
+                TextField("0", text: $amount)
                     .keyboardType(.numberPad)
                     .padding(.vertical, 12)
+                    .onChange(of: amount) { oldValue, newValue in
+                        let formatted = formatNumber(newValue)
+                        if formatted != newValue {
+                            amount = formatted
+                        }
+                    }
             }
             .background(Color.white)
             .cornerRadius(8)
@@ -100,10 +106,10 @@ struct ExpenseFormView: View {
         Button {
             if let expense = expense {
                 expense.name = name
-                expense.amount = Double(amount) ?? 0
+                expense.amount = rawAmmount()
                 expense.category = selectedCategory
             } else {
-                let newExpense = Expense(name: name, amount: Double(amount) ?? 0, category: selectedCategory)
+                let newExpense = Expense(name: name, amount: rawAmmount(), category: selectedCategory)
                 modelContext.insert(newExpense)
             }
             navigationPath = NavigationPath() // Kembali ke Home
@@ -153,6 +159,21 @@ struct ExpenseFormView: View {
         } message: {
             Text("Are you sure you want to delete this expense?")
         }
+    }
+
+    private func formatNumber(_ value: String) -> String {
+        let digits = value.filter { $0.isNumber }
+        guard let number = Int(digits) else { return "" }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        formatter.decimalSeparator = ","
+        return formatter.string(from: NSNumber(value: number)) ?? digits
+    }
+    
+    private func rawAmmount() -> Double {
+        let digits = amount.filter { $0.isNumber }
+        return Double(digits) ?? 0
     }
 }
 

@@ -20,7 +20,7 @@ struct CategoryPillView: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(isSelected ? Color.blue : Color.gray.opacity(0.2))
+            .background(isSelected ? Color.green : Color.gray.opacity(0.2))
             .foregroundColor(isSelected ? .white : .black)
             .cornerRadius(20)
         }
