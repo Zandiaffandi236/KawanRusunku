@@ -37,7 +37,7 @@ struct ExpenseRowView: View {
 
             Spacer()
 
-            Text("$\(String(format: "%.2f", expense.amount))")
+            Text("\(expense.amount, format: .currency(code: "IDR").precision(.fractionLength(0)))")
                 .font(.headline)
                 .foregroundColor(.red)
         }
@@ -48,8 +48,10 @@ struct ExpenseRowView: View {
 }
 
 #Preview {
-    ExpenseRowView(expense: Expense(name: "Nasi Goreng", amount: 35234, category: "Food & Drink"))
+    ExpenseRowView(expense: Expense(name: "Nasi Goreng", amount: 12000, category: "Food & Drink"))
         .padding()
         .background(Color(.systemGroupedBackground))
 }
+
+
 
